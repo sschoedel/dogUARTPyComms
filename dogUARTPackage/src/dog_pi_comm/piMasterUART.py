@@ -22,7 +22,7 @@ class dogUARTMaster():
 
     def __init__(self, debugging=True, baudrate=115200):
         try:
-            port = find_ports()[0]
+            port = self.find_ports()[0]
             if debugging:
                 print("using port {}".format(port))
             self.ser = serial.Serial(port, baudrate, timeout=1)
@@ -51,42 +51,42 @@ class dogUARTMaster():
                 pass
         return res
     
-    def createCommandStr():
+    def createCommandStr(self):
         return str(self.yInput).zfill(4) + str(self.xInput).zfill(4) + str(self.CM.value)
 
-    def setControlMode(modeName):
+    def setControlMode(self, modeName):
         try:
-            CM = controlMode['modeName']
+            CM = self.controlMode['modeName']
             self.ser.write(self.createCommandStr())
         except:
             print("Control mode not in list. Try one of 'H_V', 'FB_Y', 'P_R', 'TRANS_TROT', or 'ROTATE'")
     
-    def setXInput(xIn):
+    def setXInput(self, xIn):
         self.xInput = xIn
         self.ser.write(self.createCommandStr())
     
-    def setYInput(yIn):
+    def setYInput(self, yIn):
         self.yInput = yIn
         self.ser.write(self.createCommandStr())
     
-    def setOnlyXInput(xIn):
+    def setOnlyXInput(self, xIn):
         self.yInput = 0
         self.xInput = xIn
         self.ser.write(self.createCommandStr())
         
-    def setOnlyYInput(yIn):
+    def setOnlyYInput(self, yIn):
         self.yInput = yIn
         self.xInput = 0
         self.ser.write(self.createCommandStr())
     
-    def setBothInputs(yIn, xIn):
+    def setBothInputs(self, yIn, xIn):
         self.yInput = yIn
         self.xInput = xIn
         self.ser.write(self.createCommandStr())
     
-    def setAll(yIn, xIn, modeName):
+    def setAll(self, yIn, xIn, modeName):
         try:
-            self.CM = controlMode['modeName']
+            self.CM = self.controlMode['modeName']
             self.xInput = xIn
             self.yInput = yIn
             self.ser.write(self.createCommandStr())

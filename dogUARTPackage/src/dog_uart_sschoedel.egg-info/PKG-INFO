@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dog-uart-sschoedel
-Version: 0.1.1
+Version: 0.1.2
 Summary: Interface to control dog from Raspberry Pi
 Home-page: https://github.com/sschoedel/dogUARTPyComms
 Author: Sam Schoedel
