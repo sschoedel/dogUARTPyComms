@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: dog-uart-sschoedel
+Version: 0.1.1
+Summary: Interface to control dog from Raspberry Pi
+Home-page: https://github.com/sschoedel/dogUARTPyComms
+Author: Sam Schoedel
+Author-email: seschoedel@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/sschoedel/dogUARTPyComms/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 2
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=2.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+Communication lib between Raspberry Pi and Teensy for dog project
+

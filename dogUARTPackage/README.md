@@ -1,0 +1,1 @@
+Communication lib between Raspberry Pi and Teensy for dog project

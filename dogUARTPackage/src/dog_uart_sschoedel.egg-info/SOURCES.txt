@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+src/dog_pi_comm/__init__.py
+src/dog_pi_comm/piMasterUART.py
+src/dog_uart_sschoedel.egg-info/PKG-INFO
+src/dog_uart_sschoedel.egg-info/SOURCES.txt
+src/dog_uart_sschoedel.egg-info/dependency_links.txt
+src/dog_uart_sschoedel.egg-info/top_level.txt
