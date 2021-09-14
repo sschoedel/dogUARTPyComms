@@ -6,6 +6,19 @@ import sys
 from enum import Enum
 
 class dogUARTMaster():
+    bodyRoll = 0
+    bodyPitch = 0
+    bodyYaw = 0
+    bodyXoff = 0
+    bodyYoff = 0
+    bodyZoff = 0
+
+    # Linear and angular gait velocities
+    bodyWalkX = 0
+    bodyWalkY = 0
+    bodyWalkRotate = 0
+
+    # Inputs for compatibility with single joystick
     yInput = 0
     xInput = 0
 
@@ -28,13 +41,6 @@ class dogUARTMaster():
             self.ser = serial.Serial(port, baudrate, timeout=1)
             time.sleep(0.1)
             self.ser.flush()
-            # while True:
-            #     if self.ser.in_waiting > 0:
-            #         line = self.ser.readline().decode('utf-8').rstrip()
-            #         print(line)
-            #         ser.flush()
-            #     inp = raw_input(">>>> ")
-            #     self.ser.write(inp.encode('utf-8'))
         except:
             print("Error finding port. Make sure Teensy is powered on and USB is connected to Pi.")
 
@@ -92,4 +98,21 @@ class dogUARTMaster():
             self.ser.write(self.createCommandStr())
         except:
             print("Control mode not in list. Try one of 'H_V', 'FB_Y', 'P_R', 'TRANS_TROT', or 'ROTATE'")
+
+    def setRoll():
+        # self.ser.write(self.)
+        pass
+
+    def setPitch():
+        pass
     
+    def setYaw():
+        pass
+    
+    # def rawInput(self, message):
+    #     while True:
+    #         if self.ser.in_waiting > 0:
+    #             line = self.ser.readline().decode('utf-8').rstrip()
+    #             print(line)
+    #            self.ser.flush()
+    #         self.ser.write(message.encode('utf-8'))
