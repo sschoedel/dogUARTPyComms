@@ -1,4 +1,3 @@
-from src.dog_pi_comm import piMasterUART
+from ..src.dog_pi_comm import piMasterUART
 
-controller = piMasterUART.dogUARTMaster()
-
+controller = piMasterUART.dogUARTMaster(debugging=True)
