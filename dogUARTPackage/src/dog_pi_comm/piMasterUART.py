@@ -22,6 +22,9 @@ class dogUARTMaster():
     yInput = 0
     xInput = 0
 
+    # Instantiate empty serial object
+    ser = serial.Serial()
+
     class controlMode(Enum):
         H_V = 0
         FB_Y = 1
@@ -57,45 +60,53 @@ class dogUARTMaster():
                 pass
         return res
     
-    def createCommandStr(self):
+    def createSingleJoystickCommandStr(self):
+        # Joystick command string consists of four digits for joystick Y, four digits for
+        # joystick X, and one digit for the command mode: [123412341]
         return str(self.yInput).zfill(4) + str(self.xInput).zfill(4) + str(self.CM.value)
 
-    def setControlMode(self, modeName):
+    def createCommandStr(self):
+        # Full body command string consists of four digits for each orientation, four digits
+        # for x and y velocities, and four digits for rotational velocity.
+        return str(self.bodyRoll).zfill(4) + str(self.bodyPitch).zfill(4) + str(self.bodyYaw).zfill(4) \
+            + str(self.bodyWalkX).zfill(4) + str(self.bodyWalkY).zfill(4) + str(self.bodyWalkRotate).zfill(4)
+
+    def setControlModeJS(self, modeName):
         try:
-            CM = self.controlMode['modeName']
-            self.ser.write(self.createCommandStr())
+            CM = self.controlMode[modeName]
+            self.ser.write(self.createSingleJoystickCommandStr())
         except:
             print("Control mode not in list. Try one of 'H_V', 'FB_Y', 'P_R', 'TRANS_TROT', or 'ROTATE'")
     
-    def setXInput(self, xIn):
+    def setXInputJS(self, xIn):
         self.xInput = xIn
-        self.ser.write(self.createCommandStr())
+        self.ser.write(self.createSingleJoystickCommandStr())
     
-    def setYInput(self, yIn):
+    def setYInputJS(self, yIn):
         self.yInput = yIn
-        self.ser.write(self.createCommandStr())
+        self.ser.write(self.createSingleJoystickCommandStr())
     
-    def setOnlyXInput(self, xIn):
+    def setOnlyXInputJS(self, xIn):
         self.yInput = 0
         self.xInput = xIn
-        self.ser.write(self.createCommandStr())
+        self.ser.write(self.createSingleJoystickCommandStr())
         
-    def setOnlyYInput(self, yIn):
+    def setOnlyYInputJS(self, yIn):
         self.yInput = yIn
         self.xInput = 0
-        self.ser.write(self.createCommandStr())
+        self.ser.write(self.createSingleJoystickCommandStr())
     
-    def setBothInputs(self, yIn, xIn):
+    def setBothInputsJS(self, yIn, xIn):
         self.yInput = yIn
         self.xInput = xIn
-        self.ser.write(self.createCommandStr())
+        self.ser.write(self.createSingleJoystickCommandStr())
     
-    def setAll(self, yIn, xIn, modeName):
+    def setAllJS(self, yIn, xIn, modeName):
         try:
-            self.CM = self.controlMode['modeName']
+            self.CM = self.controlMode[modeName]
             self.xInput = xIn
             self.yInput = yIn
-            self.ser.write(self.createCommandStr())
+            self.ser.write(self.createSingleJoystickCommandStr())
         except:
             print("Control mode not in list. Try one of 'H_V', 'FB_Y', 'P_R', 'TRANS_TROT', or 'ROTATE'")
 
@@ -109,10 +120,12 @@ class dogUARTMaster():
     def setYaw():
         pass
     
-    # def rawInput(self, message):
-    #     while True:
-    #         if self.ser.in_waiting > 0:
-    #             line = self.ser.readline().decode('utf-8').rstrip()
-    #             print(line)
-    #            self.ser.flush()
-    #         self.ser.write(message.encode('utf-8'))
+    def rawInput(self, message):
+        self.ser.write(message.encode('utf-8'))
+
+
+    def printTeensyResponse(self):
+        print("Response from Teensy: ")
+        while self.ser.in_waiting > 0:
+            line = self.ser.readline().decode('utf-8').rstrip()
+            print(line)
