@@ -6,6 +6,9 @@ import sys
 from enum import Enum
 
 class dogUARTMaster():
+
+    nominalInput = 512
+
     bodyRoll = 0
     bodyPitch = 0
     bodyYaw = 0
@@ -19,8 +22,8 @@ class dogUARTMaster():
     bodyWalkRotate = 0
 
     # Inputs for compatibility with single joystick
-    yInput = 0
-    xInput = 0
+    yInput = nominalInput
+    xInput = nominalInput
 
     # Instantiate empty serial object
     ser = serial.Serial()
@@ -36,7 +39,7 @@ class dogUARTMaster():
     
     CM = controlMode.H_V
 
-    def __init__(self, debugging=True, baudrate=115200):
+    def __init__(self, debugging=False, baudrate=115200):
         try:
             port = self.find_ports()[0]
             if debugging:
@@ -73,7 +76,7 @@ class dogUARTMaster():
 
     def setControlModeJS(self, modeName):
         try:
-            CM = self.controlMode[modeName]
+            self.CM = self.controlMode[modeName]
             self.ser.write(self.createSingleJoystickCommandStr())
         except:
             print("Control mode not in list. Try one of 'H_V', 'FB_Y', 'P_R', 'TRANS_TROT', or 'ROTATE'")
@@ -87,13 +90,13 @@ class dogUARTMaster():
         self.ser.write(self.createSingleJoystickCommandStr())
     
     def setOnlyXInputJS(self, xIn):
-        self.yInput = 0
+        self.yInput = self.nominalInput
         self.xInput = xIn
         self.ser.write(self.createSingleJoystickCommandStr())
         
     def setOnlyYInputJS(self, yIn):
         self.yInput = yIn
-        self.xInput = 0
+        self.xInput = self.nominalInput
         self.ser.write(self.createSingleJoystickCommandStr())
     
     def setBothInputsJS(self, yIn, xIn):
@@ -110,14 +113,19 @@ class dogUARTMaster():
         except:
             print("Control mode not in list. Try one of 'H_V', 'FB_Y', 'P_R', 'TRANS_TROT', or 'ROTATE'")
 
-    def setRoll():
+    def setJoystickNominal(self):
+        self.yInput = self.nominalInput
+        self.xInput = self.nominalInput
+        self.ser.write(self.createSingleJoystickCommandStr())
+
+    def setRoll(self):
         # self.ser.write(self.)
         pass
 
-    def setPitch():
+    def setPitch(self):
         pass
     
-    def setYaw():
+    def setYaw(self):
         pass
     
     def rawInput(self, message):
